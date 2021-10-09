@@ -12,16 +12,42 @@
 ## The Jack/Queen/King all count as 10.
 ## The the Ace can count as 11 or 1.
 ## Use the following list as the deck of cards:
-## cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 ## The cards in the list have equal probability of being drawn.
 ## Cards are not removed from the deck as they are drawn.
 ## The computer is the dealer.
 
 from art import logo
+from random import randint
 
 print(logo)
 
+# Initial setup
+cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+number_of_cards = len(cards)
+game_on = False
 
+# Game start
+def start_game():
+    computers_cards = []
+    users_cards = []
+    computers_score = 0
+    users_score = 0
+    for position in range(2):
+        computers_cards.append(cards[randint(0, number_of_cards-1)])
+        users_cards.append(cards[randint(0, number_of_cards-1)])
+    print(users_cards)
+    print(computers_cards)
+    play_again = input("Do you want to play again? Answer Y or N: ")
+    if play_again.lower() == "n":
+        print("Good game!")
+        return
+    elif play_again.lower() == "y":
+        start_game()
+    else: 
+        print("Not sure :) exiting!")
+        return
+
+start_game()
 
 ##################### Hints #####################
 
