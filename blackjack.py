@@ -80,6 +80,10 @@ def start_game():
             print(f"You have: {users_score} and computer has: {computers_score}")
             loose()
             return True
+        elif computer_score == 21 and users_score == 21:
+            print(f"You have: {users_score} and computer has: {computers_score}")
+            tie()
+            return True
         elif computer_score == 21 and users_score < 21:
             print(f"You have: {users_score} and computer has: {computers_score}")
             loose()
@@ -143,7 +147,7 @@ def start_game():
     """)
 
     # Deal 2 initial cards
-    for position in range(2):
+    for _ in range(2):
         append_random_card(computers_cards)
         append_random_card(users_cards)
 
@@ -153,14 +157,8 @@ def start_game():
     computers_score = get_score(computers_cards)
     won = check_if_won(computers_score, users_score)
     if not won:
-        print(f"One of the computers cards is: {computers_cards[1]}. ")
+        print(f"One of the computers cards is: {computers_cards[0]}. ")
         next_round(users_score, computers_score)
-    if user_won:
-        print("You won!")
-        end_game()
-    elif computer_won:
-        print("You Lost!")
-        end_game()
 
 # Init game
 start_game()
