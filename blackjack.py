@@ -24,7 +24,6 @@ print(logo)
 # Initial setup
 cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
 number_of_cards = len(cards)
-game_on = False
 
 # Game start
 def start_game():
@@ -32,20 +31,55 @@ def start_game():
     users_cards = []
     computers_score = 0
     users_score = 0
+    computer_won = False
+    user_won = False
+    # Deal 2 initial cards
     for position in range(2):
         computers_cards.append(cards[randint(0, number_of_cards-1)])
         users_cards.append(cards[randint(0, number_of_cards-1)])
+    
+    def get_score(playerCards):
+        result = sum(playerCards)
+        if result > 21 and 11 in playerCards:
+            result -= 10
+        return result
+
+    def check_if_21(score):
+        if score == 21:
+            return True
+        else:
+            return False
+
+    def end_game():
+        play_again = input("Do you want to play again? Answer Y or N: ")
+        if play_again.lower() == "n":
+            print("Good game!")
+            return
+        elif play_again.lower() == "y":
+            start_game()
+        else: 
+            print("Not sure :) exiting!")
+            return
+
     print(users_cards)
     print(computers_cards)
-    play_again = input("Do you want to play again? Answer Y or N: ")
-    if play_again.lower() == "n":
-        print("Good game!")
-        return
-    elif play_again.lower() == "y":
-        start_game()
-    else: 
-        print("Not sure :) exiting!")
-        return
+    users_score = get_score(users_cards)
+    computers_score = get_score(computers_cards)
+    user_won = check_if_21(users_score)
+    computer_won = check_if_21(computers_score)
+    print(users_score)
+    print(computers_score)
+
+    if user_won:
+        print("You won!")
+        end_game()
+    elif computer_won:
+        print("You Lost!")
+        end_game()
+
+    end_game()
+
+
 
 start_game()
 
