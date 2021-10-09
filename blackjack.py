@@ -33,22 +33,16 @@ def start_game():
     users_score = 0
     computer_won = False
     user_won = False
-    # Deal 2 initial cards
-    for position in range(2):
-        computers_cards.append(cards[randint(0, number_of_cards-1)])
-        users_cards.append(cards[randint(0, number_of_cards-1)])
-    
+
+    def append_random_card(array):
+        new_card = cards[randint(0, number_of_cards-1)]
+        array.append(new_card)
+
     def get_score(playerCards):
         result = sum(playerCards)
         if result > 21 and 11 in playerCards:
             result -= 10
         return result
-
-    def check_if_21(score):
-        if score == 21:
-            return True
-        else:
-            return False
 
     def end_game():
         play_again = input("Do you want to play again? Answer Y or N: ")
@@ -60,16 +54,106 @@ def start_game():
         else: 
             print("Not sure :) exiting!")
             return
+    
+    def win():
+        print("You won!")
+        end_game()
+        return
 
-    print(users_cards)
-    print(computers_cards)
+    def loose():
+        print("You Lost!")
+        end_game()
+        return
+
+    def tie():
+        print("It was a tie!")
+        end_game()
+        return
+
+    def check_if_won(computer_score, users_score):
+        if computer_score > 21 and users_score < 21:
+            print(f"You have: {users_score} and computer has: {computers_score}")
+            win()
+            return True
+        elif computer_score < 21 and users_score > 21:
+            print(f"You have: {users_score} and computer has: {computers_score}")
+            loose()
+            return True
+        elif computer_score == 21 and users_score < 21:
+            print(f"You have: {users_score} and computer has: {computers_score}")
+            loose()
+            return True
+        elif computer_score < 21 and users_score == 21:
+            print(f"You have: {users_score} and computer has: {computers_score}")
+            win()
+            return True
+        else:
+            # print("Noone won!")
+            return False
+
+    def next_round(users_score, computers_score, rounds_passed_without_action = 0):
+        if rounds_passed_without_action == 3: 
+            tie()
+            return
+        # print(f"In the beginning of the round you have: {users_score} and computer has: {computers_score}")
+        print(f"Your cards are: {users_cards}")
+        new_card = input("QUESTION: Would you like to take a new card? Y or N: ")
+        game_ended = False
+        if (new_card.lower()=="y"):
+            append_random_card(users_cards)
+            users_score = get_score(users_cards)
+            print(users_cards)
+            print(f"You have after taking: {users_score}")
+            game_ended = check_if_won(computers_score, users_score)
+            if not (game_ended): 
+                if (computers_score < 17):
+                    append_random_card(computers_cards)
+                    computers_score =get_score(computers_cards)
+                    # print(f"Computer has after taking: {computers_score}")
+                    # print(computers_cards)
+                    game_ended = check_if_won(computers_score, users_score)
+                    if not game_ended:
+                        # print(f"You now have: {users_score} and computer has: {computers_score}")    
+                        next_round(users_score, computers_score)
+                else:
+                    # print(f"You now have: {users_score} and computer has: {computers_score}")    
+                    next_round(users_score, computers_score)
+
+        else:
+            if (computers_score < 17):
+                append_random_card(computers_cards)
+                computers_score =get_score(computers_cards)
+                # print(f"Computer has after taking: {computers_score}")
+                # print(computers_cards)
+                game_ended = check_if_won(computers_score, users_score)
+                if not game_ended:
+                    # print(f"You now have: {users_score} and computer has: {computers_score}")    
+                    next_round(users_score, computers_score)
+            else:
+                rounds_passed_without_action += 1
+                # print(f"You now have: {users_score} and computer has: {computers_score}")
+                print("""
+                Next round...
+                """)
+                next_round(users_score, computers_score, rounds_passed_without_action)
+    
+    print("""
+    !!!!!!NEW GAME!!!!!!
+    """)
+
+    # Deal 2 initial cards
+    for position in range(2):
+        append_random_card(computers_cards)
+        append_random_card(users_cards)
+
+    print(f"Your cards are: {users_cards}")
+    # print(computers_cards)
     users_score = get_score(users_cards)
     computers_score = get_score(computers_cards)
-    user_won = check_if_21(users_score)
-    computer_won = check_if_21(computers_score)
-    print(users_score)
-    print(computers_score)
-
+    won = check_if_won(computers_score, users_score)
+    if not won:
+        print(f"One of the computers cards is: {computers_cards[1]}. ")
+        next_round(users_score, computers_score)
     if user_won:
         print("You won!")
         end_game()
@@ -77,10 +161,7 @@ def start_game():
         print("You Lost!")
         end_game()
 
-    end_game()
-
-
-
+# Init game
 start_game()
 
 ##################### Hints #####################
