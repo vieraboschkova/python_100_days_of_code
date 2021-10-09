@@ -17,7 +17,7 @@
 ## The computer is the dealer.
 
 from art import logo
-from random import randint
+from random import randint, choice
 
 print(logo)
 
@@ -35,7 +35,8 @@ def start_game():
     user_won = False
 
     def append_random_card(array):
-        new_card = cards[randint(0, number_of_cards-1)]
+        # new_card = cards[randint(0, number_of_cards-1)]
+        new_card = choice(array)
         array.append(new_card)
 
     def get_score(playerCards):
