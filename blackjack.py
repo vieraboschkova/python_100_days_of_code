@@ -1,9 +1,9 @@
 ############### Blackjack Project #####################
 
-#Difficulty Normal 😎: Use all Hints below to complete the project.
-#Difficulty Hard 🤔: Use only Hints 1, 2, 3 to complete the project.
-#Difficulty Extra Hard 😭: Only use Hints 1 & 2 to complete the project.
-#Difficulty Expert 🤯: Only use Hint 1 to complete the project.
+#Difficulty Normal : Use all Hints below to complete the project.
+#Difficulty Hard : Use only Hints 1, 2, 3 to complete the project.
+#Difficulty Extra Hard : Only use Hints 1 & 2 to complete the project.
+#Difficulty Expert : Only use Hint 1 to complete the project.
 
 ############### Our Blackjack House Rules #####################
 
@@ -16,6 +16,12 @@
 ## The cards in the list have equal probability of being drawn.
 ## Cards are not removed from the deck as they are drawn.
 ## The computer is the dealer.
+
+from art import logo
+
+print(logo)
+
+
 
 ##################### Hints #####################
 
