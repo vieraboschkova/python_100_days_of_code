@@ -35,16 +35,23 @@ while game_on:
             was_number_guessed = True
             print(f"Yay! You won! It was: {number_to_guess}")
         elif guessed_number > number_to_guess:
+            # decrease number of tries
             number_of_tries_left -= 1
             print(f"Too high! You have: {number_of_tries_left} chances left")
         elif guessed_number < number_to_guess:
+            # decrease number of tries
             number_of_tries_left -= 1
             print(f"Too low! You have: {number_of_tries_left} chances left")
-        # decrease number of tries
-        # repeat
+        
         # if no more number of tries - > lost -> ask if plays againa
+        if number_of_tries_left == 0:
+            print("Sorry, You ran out of chances!")
+
+        # repeat
     
     go_again = input("Would you like to go again? Type Y or N. ").lower()
     if go_again == "n":
         game_on = False
         print("Bye bye! Good game!")
+    else:
+        print("You didnt choose N, so lets go again!")
