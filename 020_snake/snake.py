@@ -1,3 +1,4 @@
+import random 
 from turtle import Screen, Turtle
 import time
 
@@ -15,11 +16,18 @@ class Snake:
 
     def create_snake(self):
         for position in range(0,3):
-            segment = Turtle('square')
-            segment.penup()
-            segment.color('white')
-            segment.backward(position*20)
-            self.segments.append(segment)
+            self.add_segment((-position*20, 0))
+    
+    def add_segment(self, position):
+        segment = Turtle('square')
+        segment.speed(3)
+        segment.penup()
+        segment.color(random.randint(30,255), random.randint(30,255), random.randint(30,255))
+        segment.goto(position)
+        self.segments.append(segment)
+
+    def extend(self):
+        self.add_segment(self.segments[-1].position())
 
     def move(self):
         for position in range(len(self.segments) - 1, 0, -1):
