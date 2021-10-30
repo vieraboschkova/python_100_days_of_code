@@ -1,9 +1,10 @@
-from turtle import Turtle, ycor
+from turtle import Turtle
 
 class Paddle(Turtle):
     def __init__(self):
         super().__init__()
         self.create_paddle()
+        self.score = 0
 
     def create_paddle(self):
         self.shape("square")
